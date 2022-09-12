@@ -13,42 +13,133 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
- #include "Std_Types.h"
+#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Std_Types.h"
  
 /**************************************************************************************************
  *	GLOBAL DATA TYPES AND STRUCTURES
  *************************************************************************************************/
-// typedef union
-// {
-//     uint32 R;
-//     struct             //the diadvantage of this way is that it will act in a wrong way 
-//     {                           //if the compiler was Big Endian
-//         uint32 VECACT   :8;     // ":" it is used to give the var a bit field
-//         uint32          :3;
-//         uint32 RETBASE  :1;
-//         uint32 VECPEND  :8;
-//         uint32          :2;
-//         uint32 ISRPEND  :1;
-//         uint32 ISRPRE   :1;
-//         uint32          :1;
-//         uint32 PENDSTCLR:1;
-//         uint32 PENDSTSET:1;
-//         uint32 UNPENDSV :1;
-//         uint32 PENDSV   :1;
-//         uint32          :2;
-//         uint32 NMISET   :1;
-//     }BF;
-// }INTCTRL_Tag;
+typedef union
+{
+    uint32 R;
+    struct             //the diadvantage of this way is that it will act in a wrong way 
+    {                           //if the compiler was Big Endian
+        volatile uint32          :5;     // ":" it is used to give the var a bit field
+        uint32 INTA     :3;
+        uint32          :5;
+        uint32 INTB     :3;
+        uint32          :5;
+        uint32 INTC     :3;
+        uint32          :5;
+        uint32 INTD     :3;
+    }BF;
+}PRI_Tag;
+//Nested Vectored Interrupt Controller (NVIC) Registers
+typedef struct
+{
+     uint32 EN[5];
+     uint32 reserved1[27];
+     uint32 DIS[5];
+     uint32 reserved2[27];
+     uint32 PEND[5];
+     uint32 reserved3[27];
+     uint32 UNPEND[5];
+     uint32 reserved4[27];
+     uint32 ACTIV[5];
+     uint32 reserved5[59];
+     PRI_Tag PRI[35];
+     uint32 reserved6[669];
+     uint32 SWTRIG;
+} NVIC_Registers;
 
+
+
+typedef union
+{
+    uint32 R;
+    struct             //the diadvantage of this way is that it will act in a wrong way 
+    {                           //if the compiler was Big Endian
+        uint32 VECACT   :8;     // ":" it is used to give the var a bit field
+        uint32          :3;
+        uint32 RETBASE  :1;
+        uint32 VECPEND  :8;
+        uint32          :2;
+        uint32 ISRPEND  :1;
+        uint32 ISRPRE   :1;
+        uint32          :1;
+        uint32 PENDSTCLR:1;
+        uint32 PENDSTSET:1;
+        uint32 UNPENDSV :1;
+        uint32 PENDSV   :1;
+        uint32          :2;
+        uint32 NMISET   :1;
+    }BF;
+}INTCTRL_Tag;
+
+
+
+//GPIO
+typedef struct
+{
+    volatile uint32 GPIODATA[256];
+    volatile uint32 GPIODIR;
+    volatile uint32 GPIOIS;
+    volatile uint32 GPIOIBE;
+    volatile uint32 GPIOIEV;
+    volatile uint32 GPIOIM;
+    volatile uint32 GPIORIS;
+    volatile uint32 GPIOMIS;
+    volatile uint32 GPIOICR;
+    volatile uint32 GPIOAFSEL;
+    volatile uint32 reserved2[55];
+    volatile uint32 GPIODR2R;
+    volatile uint32 GPIODR4R;
+    volatile uint32 GPIODR8R;
+    volatile uint32 GPIOODR;
+    volatile uint32 GPIOPUR;
+    volatile uint32 GPIOPDR;
+    volatile uint32 GPIOSLR;
+    volatile uint32 GPIODEN;
+    volatile uint32 GPIOLOCK;
+    volatile uint32 GPIOCR;
+    volatile uint32 GPIOAMSEL;
+    volatile uint32 GPIOPCTL;
+    volatile uint32 GPIOADCCTL;
+    volatile uint32 GPIODMACTL;
+    volatile uint32 reserved3[678];
+    volatile uint32 GPIOPeriphID4;
+    volatile uint32 GPIOPeriphID5;
+    volatile uint32 GPIOPeriphID6;
+    volatile uint32 GPIOPeriphID7;
+    volatile uint32 GPIOPeriphID0;
+    volatile uint32 GPIOPeriphID1;
+    volatile uint32 GPIOPeriphID2;
+    volatile uint32 GPIOPeriphID3;
+    volatile uint32 GPIOPCellID0;
+    volatile uint32 GPIOPCellID1;
+    volatile uint32 GPIOPCellID2;
+    volatile uint32 GPIOPCellID3;
+
+}GPIO_Registers;
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
 
 
 
- #define CORTEXM4_PERI_BASE_ADDRESS     0xE000E000
+ #define CORTEXM4_PERI_BASE_ADDRESS     0xE000E000u
+ #define NVIC_OFFSET                    0x100u
+
+ #define GPIO_COMMON_BASE               0x40000000u
+ #define GPIO_A_BASE                    0x40004000u
+ #define GPIO_B_BASE                    0x40005000u
+ #define GPIO_C_BASE                    0x40006000u
+ #define GPIO_D_BASE                    0x40007000u
+ #define GPIO_E_BASE                    0x40024000u
+ #define GPIO_F_BASE                    0x40025000u
 
  //Nested Vectored Interrupt Controller (NVIC) Registers
+ #define NVIC                           ((volatile NVIC_Registers *)(CORTEXM4_PERI_BASE_ADDRESS + NVIC_OFFSET))
+
  #define EN0                            *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0x100))
  #define EN1                            *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0x104))
  #define EN2                            *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0x108))
@@ -120,7 +211,7 @@
  //System Control Block (SCB) Registers
  #define ACTLR                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0x008))
  #define CPUID                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD00))
- #define INTCTRL                        *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD04))
+ #define INTCTRL                        ((volatile INTCTRL_Tag*)(CORTEXM4_PERI_BASE_ADDRESS+0xD04))
  #define VTABLE                         *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD08))
  #define APINT                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD0C))
  #define SYSCTRL                        *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD10))
@@ -134,6 +225,16 @@
  #define MMADDR                         *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD34))
  #define FAULTADDR                      *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD38))
 
+//GPIO Register
+ //GPIO
+ #define GPIO(GPIO_BASE)                ((GPIO_Registers *)(GPIO_BASE))
+
+ #define GPIOA                          ((GPIO_Registers *)(GPIO_A_BASE))
+ #define GPIOB                          ((GPIO_Registers *)(GPIO_B_BASE))
+ #define GPIOC                          ((GPIO_Registers *)(GPIO_C_BASE))
+ #define GPIOD                          ((GPIO_Registers *)(GPIO_D_BASE))
+ #define GPIOE                          ((GPIO_Registers *)(GPIO_E_BASE))
+ #define GPIOF                          ((GPIO_Registers *)(GPIO_F_BASE))
 /**************************************************************************************************
  *	GLOBAL FUNCTION MACROS
  *************************************************************************************************/

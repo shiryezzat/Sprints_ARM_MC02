@@ -13,7 +13,7 @@
  *	INCLUDES
  *************************************************************************************************/
 
- #include "IntCtrl.h"
+ #include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\IntCtrl.h"
  
 /**************************************************************************************************
  *	LOCAL MACROS CONSTANT\FUNCTION
@@ -64,7 +64,9 @@
 
     //Enable\Disable based on your configuration in NVIC_ENx and SCB_Sys register
     NVIC_ENx(GPIO_Port_A);
-    INTCTRL |= 0x00000000;
+    NVIC->DIS[0]=00;
+    NVIC->EN[9]=00;
+    NVIC->PRI[0].BF.INTA=0;
  }
  
 /**************************************************************************************************

@@ -12,13 +12,12 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
- 
- #include "IntCtrl_Cfg.h"
- 
+ #include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Dio.h"
 /**************************************************************************************************
  *	LOCAL MACROS CONSTANT\FUNCTION
  *************************************************************************************************/
- 
+ #define FIRST_2BITS_MASK                       0x000000FFu
+ #define SECOND_2BITS_MASK                      0x0000FF00u
 /**************************************************************************************************
  *	LOCAL DATA
  *************************************************************************************************/
@@ -38,84 +37,6 @@
 /**************************************************************************************************
  *	GLOBAL FUNCTIONS
  *************************************************************************************************/
- //Enabling FAULTMASK and PRIMASK using MSR or CPS
-__asm("CPSIE f");
-__asm("CPSIE i");
-
-//configre BASEPRI reg using MSR
-
-//NVIC and SCB
-
- void CFGCTRL_Conf(void)
- {
-    //Enable SWTRIG by setting MAINPEND (bit 1)
-    CFGCTRL |= 0x10;
- }
-
- void SWTRIG_INTID(void)
- {
-   SWTRIG |= 0x00000001; //This field holds the interrupt ID of the required SGI. For example, a value
-                      //of 0x3 generates an interrupt on IRQ3 
- }
-
-//Enabling interrupts, we give this function the interrupt and it enables it
- void NVIC_ENx(IntCtrl_InterruptType n)
- {
-    if( (n>=0) && (n<=31))
-    {
-        EN0 |= (1<<(n-0));
-    }
-    if( (n>=32) && (n<=63))
-    {
-        EN1 |= (1<<(n-32));
-    }
-    if( (n>=64) && (n<=95))
-    {
-        EN2 |= (1<<(n-64));
-    }
-    if( (n>=96) && (n<=127))
-    {
-        EN3 |= (1<<(n-96));
-    }
-    if( (n>=128) && (n<=138))
-    {
-        EN4 |= (1<<(n-128));
-    }
- }
-//Disabling interrupts, we give this function the interrupt and it enables it
- void NVIC_DISx(IntCtrl_InterruptType n)
- {
-    if( (n>=0) && (n<=31))
-    {
-        DIS0 |= (1<<(n-0));
-    }
-    if( (n>=32) && (n<=63))
-    {
-        DIS1 |= (1<<(n-32));
-    }
-    if( (n>=64) && (n<=95))
-    {
-        DIS2 |= (1<<(n-64));
-    }
-    if( (n>=96) && (n<=127))
-    {
-        DIS3 |= (1<<(n-96));
-    }
-    if( (n>=128) && (n<=138))
-    {
-        DIS4 |= (1<<(n-128));
-    }
- }
-
-//Giving priorities to interrupts
- void NVIC_PRIx(IntCtrl_InterruptType n, int group, int subgroup)
- {
-    NVIC->DIS[0]=9;
- }
-
- 
-	 
-	
  
 /********************************************************************
  *	\Syntax				:
@@ -128,8 +49,91 @@ __asm("CPSIE i");
  *	\Return value		:
  *
  *******************************************************************/
+Dio_LevelType Dio_ReadChannel(Dio_ChannelType ChannelId)
+{
+    uint32 port = (GPIO_COMMON_BASE | (ChannelId & SECOND_2BITS_MASK));
+    uint32 bit = (ChannelId & FIRST_2BITS_MASK);
+        
+    if (GPIO(port)->GPIODATA[bit])
+    {
+        return Dio_High;
+    }
+    else
+    {
+        return Dio_Low;
+    }
+
+}
  
+/********************************************************************
+ *	\Syntax				:
+ *	\Description		:
+ *
+ *	\Sync\Async			:
+ *	\Reentrancy			:
+ *	\Parameters (in)	:
+ *	\Parameters (out)	:
+ *	\Return value		:
+ *
+ *******************************************************************/
+void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_LevelType Level)
+{
+    uint32 port = (GPIO_COMMON_BASE | (ChannelId & SECOND_2BITS_MASK));
+    uint32 bit = (ChannelId & FIRST_2BITS_MASK);
+        
+    GPIO(port)->GPIODATA[bit] = Level;      //something maybe wrong here
+}
+
+/********************************************************************
+ *	\Syntax				:
+ *	\Description		:
+ *
+ *	\Sync\Async			:
+ *	\Reentrancy			:
+ *	\Parameters (in)	:
+ *	\Parameters (out)	:
+ *	\Return value		:
+ *
+ *******************************************************************/
+Dio_PortLevelType Dio_ReadPort(Dio_PortType PortId)
+{
+    return ((uint8)GPIO(PortId)->GPIODATA[255]);
+}
+
+/********************************************************************
+ *	\Syntax				:
+ *	\Description		:
+ *
+ *	\Sync\Async			:
+ *	\Reentrancy			:
+ *	\Parameters (in)	:
+ *	\Parameters (out)	:
+ *	\Return value		:
+ *
+ *******************************************************************/
+void Dio_WritePort(Dio_PortLevelType PortId, Dio_PortLevelType Level)
+{
+    GPIO(PortId)->GPIODATA[255] = Level;
+}
  
+/********************************************************************
+ *	\Syntax				:
+ *	\Description		:
+ *
+ *	\Sync\Async			:
+ *	\Reentrancy			:
+ *	\Parameters (in)	:
+ *	\Parameters (out)	:
+ *	\Return value		:
+ *
+ *******************************************************************/
+void Dio_FlipChannel(Dio_ChannelType ChannelId)
+{
+    uint32 port = (GPIO_COMMON_BASE | (ChannelId & SECOND_2BITS_MASK));
+    uint32 bit = (ChannelId & FIRST_2BITS_MASK);
+
+    GPIO(port)->GPIODATA[255] ^=  ( ChannelId & FIRST_2BITS_MASK);
+}
 /**************************************************************************************************
  *	END OF FILE:
  *************************************************************************************************/
