@@ -18,21 +18,7 @@
 /**************************************************************************************************
  *	GLOBAL DATA TYPES AND STRUCTURES
  *************************************************************************************************/
-typedef union
-{
-    uint32 R;
-    struct             //the diadvantage of this way is that it will act in a wrong way 
-    {                           //if the compiler was Big Endian
-        volatile uint32          :5;     // ":" it is used to give the var a bit field
-        uint32 INTA     :3;
-        uint32          :5;
-        uint32 INTB     :3;
-        uint32          :5;
-        uint32 INTC     :3;
-        uint32          :5;
-        uint32 INTD     :3;
-    }BF;
-}PRI_Tag;
+
 //Nested Vectored Interrupt Controller (NVIC) Registers
 typedef struct
 {
@@ -44,15 +30,29 @@ typedef struct
      uint32 reserved3[27];
      uint32 UNPEND[5];
      uint32 reserved4[27];
-     uint32 ACTIV[5];
+     uint32 ACTIVE[5];
      uint32 reserved5[59];
-     PRI_Tag PRI[35];
+     union
+     {
+     uint32 R;
+        struct             //the diadvantage of this way is that it will act in a wrong way 
+        {                           //if the compiler was Big Endian
+            uint32          :5;     // ":" it is used to give the var a bit field
+            uint32 INTA     :3;
+            uint32          :5;
+            uint32 INTB     :3;
+            uint32          :5;
+            uint32 INTC     :3;
+            uint32          :5;
+            uint32 INTD     :3;
+        }BF;
+     }PRI[35];
      uint32 reserved6[669];
      uint32 SWTRIG;
 } NVIC_Registers;
 
 
-
+//SCB
 typedef union
 {
     uint32 R;
@@ -80,44 +80,44 @@ typedef union
 //GPIO
 typedef struct
 {
-    volatile uint32 GPIODATA[256];
-    volatile uint32 GPIODIR;
-    volatile uint32 GPIOIS;
-    volatile uint32 GPIOIBE;
-    volatile uint32 GPIOIEV;
-    volatile uint32 GPIOIM;
-    volatile uint32 GPIORIS;
-    volatile uint32 GPIOMIS;
-    volatile uint32 GPIOICR;
-    volatile uint32 GPIOAFSEL;
-    volatile uint32 reserved2[55];
-    volatile uint32 GPIODR2R;
-    volatile uint32 GPIODR4R;
-    volatile uint32 GPIODR8R;
-    volatile uint32 GPIOODR;
-    volatile uint32 GPIOPUR;
-    volatile uint32 GPIOPDR;
-    volatile uint32 GPIOSLR;
-    volatile uint32 GPIODEN;
-    volatile uint32 GPIOLOCK;
-    volatile uint32 GPIOCR;
-    volatile uint32 GPIOAMSEL;
-    volatile uint32 GPIOPCTL;
-    volatile uint32 GPIOADCCTL;
-    volatile uint32 GPIODMACTL;
-    volatile uint32 reserved3[678];
-    volatile uint32 GPIOPeriphID4;
-    volatile uint32 GPIOPeriphID5;
-    volatile uint32 GPIOPeriphID6;
-    volatile uint32 GPIOPeriphID7;
-    volatile uint32 GPIOPeriphID0;
-    volatile uint32 GPIOPeriphID1;
-    volatile uint32 GPIOPeriphID2;
-    volatile uint32 GPIOPeriphID3;
-    volatile uint32 GPIOPCellID0;
-    volatile uint32 GPIOPCellID1;
-    volatile uint32 GPIOPCellID2;
-    volatile uint32 GPIOPCellID3;
+    uint32 GPIODATA[256];
+    uint32 GPIODIR;
+    uint32 GPIOIS;
+    uint32 GPIOIBE;
+    uint32 GPIOIEV;
+    uint32 GPIOIM;
+    uint32 GPIORIS;
+    uint32 GPIOMIS;
+    uint32 GPIOICR;
+    uint32 GPIOAFSEL;
+    uint32 reserved2[55];
+    uint32 GPIODR2R;
+    uint32 GPIODR4R;
+    uint32 GPIODR8R;
+    uint32 GPIOODR;
+    uint32 GPIOPUR;
+    uint32 GPIOPDR;
+    uint32 GPIOSLR;
+    uint32 GPIODEN;
+    uint32 GPIOLOCK;
+    uint32 GPIOCR;
+    uint32 GPIOAMSEL;
+    uint32 GPIOPCTL;
+    uint32 GPIOADCCTL;
+    uint32 GPIODMACTL;
+    uint32 reserved3[678];
+    uint32 GPIOPeriphID4;
+    uint32 GPIOPeriphID5;
+    uint32 GPIOPeriphID6;
+    uint32 GPIOPeriphID7;
+    uint32 GPIOPeriphID0;
+    uint32 GPIOPeriphID1;
+    uint32 GPIOPeriphID2;
+    uint32 GPIOPeriphID3;
+    uint32 GPIOPCellID0;
+    uint32 GPIOPCellID1;
+    uint32 GPIOPCellID2;
+    uint32 GPIOPCellID3;
 
 }GPIO_Registers;
 /**************************************************************************************************
@@ -227,14 +227,14 @@ typedef struct
 
 //GPIO Register
  //GPIO
- #define GPIO(GPIO_BASE)                ((GPIO_Registers *)(GPIO_BASE))
+ #define GPIO(GPIO_BASE)                ((volatile GPIO_Registers *)(GPIO_BASE))
 
- #define GPIOA                          ((GPIO_Registers *)(GPIO_A_BASE))
- #define GPIOB                          ((GPIO_Registers *)(GPIO_B_BASE))
- #define GPIOC                          ((GPIO_Registers *)(GPIO_C_BASE))
- #define GPIOD                          ((GPIO_Registers *)(GPIO_D_BASE))
- #define GPIOE                          ((GPIO_Registers *)(GPIO_E_BASE))
- #define GPIOF                          ((GPIO_Registers *)(GPIO_F_BASE))
+ #define GPIOA                          ((volatile GPIO_Registers *)(GPIO_A_BASE))
+ #define GPIOB                          ((volatile GPIO_Registers *)(GPIO_B_BASE))
+ #define GPIOC                          ((volatile GPIO_Registers *)(GPIO_C_BASE))
+ #define GPIOD                          ((volatile GPIO_Registers *)(GPIO_D_BASE))
+ #define GPIOE                          ((volatile GPIO_Registers *)(GPIO_E_BASE))
+ #define GPIOF                          ((volatile GPIO_Registers *)(GPIO_F_BASE))
 /**************************************************************************************************
  *	GLOBAL FUNCTION MACROS
  *************************************************************************************************/

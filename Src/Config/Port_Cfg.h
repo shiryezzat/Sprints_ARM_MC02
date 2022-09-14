@@ -1,25 +1,28 @@
 /**************************************************************************************************
  *	FILE DESCRIPTION
  *	-----------------------------------------------------------------------------------------------
- *	       File:	IntCtrl.h
+ *	       File:	Port_Cfg.h
  *	     Module:
  *
  *	Description:
  *
  *
  *************************************************************************************************/
-#ifndef INTCTRL_H
-#define INTCTRL_H
+#ifndef PORT_CFG_H
+#define PORT_CFG_H
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\IntCtrl_Types.h"
+#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Std_Types.h"
 #include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Mcu_Hw.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Config\IntCtrl_Cfg.h"
+#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Port_Types.h"
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
- 
+#define ACTICATED_PINS_NUM                     3
+
+#define FIRST_2BITS_MASK                       0x000000FFu
+#define SECOND_2BITS_MASK                      0x0000FF00u
 /**************************************************************************************************
  *	GLOBAL FUNCTION MACROS
  *************************************************************************************************/
@@ -27,22 +30,12 @@
 /**************************************************************************************************
  *	GLOBAL DATA TYPES AND STRUCTURES
  *************************************************************************************************/
+extern const Port_ConfigType Port_Config[ACTICATED_PINS_NUM];
 
- /********************************************************************
- *	\Syntax				: void IntCtrl_Init(void)
- *	\Description		: Initialize NVIC\SCB Module by passing the
- *                        the configuration into NVIC\SCB registers
- *	\Sync\Async			: Synchronous
- *	\Reentrancy			: None Reentrant
- *	\Parameters (in)	: None
- *	\Parameters (out)	: None
- *	\Return value		: None
- *
- *******************************************************************/
- void IntCtrl_Init(void);
+ 
 
- #endif    /* INTCTRL_H */
+ #endif    /* PORT_CFG_H */
  
 /**************************************************************************************************
- *	END OF FILE:	IntCtrl.h
+ *	END OF FILE:	Port_Cfg.h
  *************************************************************************************************/
