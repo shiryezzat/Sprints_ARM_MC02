@@ -48,7 +48,7 @@ typedef struct
         }BF;
      }PRI[35];
      uint32 reserved6[669];
-     uint32 SWTRIG;
+     uint32 SWIDETRIG;
 } NVIC_Registers;
 
 
@@ -120,6 +120,41 @@ typedef struct
     uint32 GPIOPCellID3;
 
 }GPIO_Registers;
+
+// General Prpose TIMERs registers
+typedef struct
+{
+    uint32 GPTMCFG;
+    uint32 GPTMTAMR;
+    uint32 GPTMTBMR;
+    uint32 GPTMCTL;
+    uint32 GPTMSYNC;
+    uint32 reserved1;
+    uint32 GPTMIMR;
+    uint32 GPTMRIS;
+    uint32 GPTMMIS;
+    uint32 GPTMICR;
+    uint32 GPTMTAILR;
+    uint32 GPTMTBILR;
+    uint32 GPTMTAMATCHR;
+    uint32 GPTMTAMBTCHR;
+    uint32 GPTMTAPR;
+    uint32 GPTMTBPR;
+    uint32 GPTMTAPMR;
+    uint32 GPTMTBPMR;
+    uint32 GPTMTAR;
+    uint32 GPTMTBR;
+    uint32 GPTMTAV;
+    uint32 GPTMTBV;
+    uint32 GPTMTCPD;
+    uint32 GPTMTAPS;
+    uint32 GPTMTBPS;
+    uint32 GPTMTAPV;
+    uint32 GPTMTBPV;
+    uint32 reserved2[918];
+    uint32 GPTMPP;
+
+} Gpt_Registers;
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
@@ -136,6 +171,22 @@ typedef struct
  #define GPIO_D_BASE                    0x40007000u
  #define GPIO_E_BASE                    0x40024000u
  #define GPIO_F_BASE                    0x40025000u
+
+ // GPT Base addresses
+ #define TIMER0_BASE                    0x40030000u
+ #define TIMER1_BASE                    0x40031000u
+ #define TIMER2_BASE                    0x40032000u
+ #define TIMER3_BASE                    0x40033000u
+ #define TIMER4_BASE                    0x40035000u
+ #define TIMER5_BASE                    0x40035000u
+ 
+ #define WIDETIMER0_BASE                0x40036000u
+ #define WIDETIMER1_BASE                0x40037000u
+ #define WIDETIMER2_BASE                0x4004C000u
+ #define WIDETIMER3_BASE                0x4004D000u
+ #define WIDETIMER4_BASE                0x4004E000u
+ #define WIDETIMER5_BASE                0x4004F000u
+
 
  //Nested Vectored Interrupt Controller (NVIC) Registers
  #define NVIC                           ((volatile NVIC_Registers *)(CORTEXM4_PERI_BASE_ADDRESS + NVIC_OFFSET))
@@ -206,7 +257,7 @@ typedef struct
  #define PRI33                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0x484))
  #define PRI34                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0x488))
 
- #define SWTRIG                         *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xF00))
+ #define SWIDETRIG                         *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xF00))
  
  //System Control Block (SCB) Registers
  #define ACTLR                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0x008))
@@ -226,7 +277,7 @@ typedef struct
  #define FAULTADDR                      *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD38))
 
 //GPIO Register
- //GPIO
+//GPIO
  #define GPIO(GPIO_BASE)                ((volatile GPIO_Registers *)(GPIO_BASE))
 
  #define GPIOA                          ((volatile GPIO_Registers *)(GPIO_A_BASE))
@@ -235,6 +286,27 @@ typedef struct
  #define GPIOD                          ((volatile GPIO_Registers *)(GPIO_D_BASE))
  #define GPIOE                          ((volatile GPIO_Registers *)(GPIO_E_BASE))
  #define GPIOF                          ((volatile GPIO_Registers *)(GPIO_F_BASE))
+
+//General Purpose TIMERs
+ #define TIMER(TIMER_BASE)              ((volatile Gpt_Registers *)(TIMER_BASE))
+
+ #define TIMER0                         ((volatile Gpt_Registers *)(TIMER0_BASE))
+ #define TIMER1                         ((volatile Gpt_Registers *)(TIMER1_BASE))
+ #define TIMER2                         ((volatile Gpt_Registers *)(TIMER2_BASE))
+ #define TIMER3                         ((volatile Gpt_Registers *)(TIMER3_BASE))
+ #define TIMER4                         ((volatile Gpt_Registers *)(TIMER4_BASE))
+ #define TIMER5                         ((volatile Gpt_Registers *)(TIMER5_BASE))
+
+ #define WIDETIMER(WIDETIMER_BASE)      ((volatile Gpt_Registers *)(WIDETIMER_BASE))
+
+ #define WIDETIMER0                     ((volatile Gpt_Registers *)(WIDETIMER0_BASE))
+ #define WIDETIMER1                     ((volatile Gpt_Registers *)(WIDETIMER1_BASE))
+ #define WIDETIMER2                     ((volatile Gpt_Registers *)(WIDETIMER2_BASE))
+ #define WIDETIMER3                     ((volatile Gpt_Registers *)(WIDETIMER3_BASE))
+ #define WIDETIMER4                     ((volatile Gpt_Registers *)(WIDETIMER4_BASE))
+ #define WIDETIMER5                     ((volatile Gpt_Registers *)(WIDETIMER5_BASE))
+
+
 /**************************************************************************************************
  *	GLOBAL FUNCTION MACROS
  *************************************************************************************************/

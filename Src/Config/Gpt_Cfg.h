@@ -1,46 +1,40 @@
 /**************************************************************************************************
  *	FILE DESCRIPTION
  *	-----------------------------------------------------------------------------------------------
- *	       File:	Std_Types.h
+ *	       File:	Gpt_Cfg.h
  *	     Module:
  *
  *	Description:
  *
  *
  *************************************************************************************************/
-#ifndef STD_TYPES_H
-#define STD_TYPES_H
+#ifndef GPT_CFG_H
+#define GPT_CFG_H
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
- 
+#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Std_Types.h"
+#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Mcu_Hw.h"
+#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Gpt_Types.h"
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
- #define NULL 0x0
+#define ACTIVATED_TIMERS_NUM                    (1u)
 
 /**************************************************************************************************
  *	GLOBAL FUNCTION MACROS
  *************************************************************************************************/
- 
+ void Gpt_SetTimerModuleInit(Gpt_ConfigType *ConfigPtr);
+ void Gpt_SetTimerMode(Gpt_ConfigType *ConfigPtr);
 /**************************************************************************************************
  *	GLOBAL DATA TYPES AND STRUCTURES
  *************************************************************************************************/
- typedef unsigned char uint8;
- typedef signed char sint8;
- typedef unsigned short uint16;
- typedef signed short sint16;
- typedef unsigned long uint32;
- typedef signed long sint32;
- typedef unsigned long long uint64;
- typedef signed long long sint64;
- typedef float float32;
- typedef double float64;
- typedef int* ptoi;
+extern Gpt_ConfigType gpt_config[ACTIVATED_TIMERS_NUM];
 
  
- #endif    /* STD_TYPES_H */
+
+ #endif    /* GPT_CFG_H */
  
 /**************************************************************************************************
- *	END OF FILE:	Std_Types.h
+ *	END OF FILE:	Gpt_Cfg.h
  *************************************************************************************************/
