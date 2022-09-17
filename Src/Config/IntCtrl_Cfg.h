@@ -21,14 +21,25 @@
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
- 
+#define ACTIVATED_INT_NUM                           (2u)
+
+/*
+ * xxx__ for group priority(0->7), subgroup priority (0)
+ * xxy__ for group priority(0->3), subgroup priority (0->1)
+ * xyy__ for group priority(0->1), subgroup priority (0->3)
+ * yyy__ for group priority(0)	 , subgroup priority (0->7)
+ */
+#define PRIGROUPING                                 XXY
+
 /**************************************************************************************************
  *	GLOBAL FUNCTION MACROS
  *************************************************************************************************/
- 
+void NVIC_SetPRIx(const IntCtrl_ConfigType *ConfigPtr);
+
 /**************************************************************************************************
  *	GLOBAL DATA TYPES AND STRUCTURES
  *************************************************************************************************/
+extern const IntCtrl_ConfigType intCtrl_cofig[ACTIVATED_INT_NUM];
 
  
 

@@ -1,21 +1,21 @@
 /**************************************************************************************************
  *	FILE DESCRIPTION
  *	-----------------------------------------------------------------------------------------------
- *	       File:	IntCtrl.h
+ *	       File:	SysCtrl.h
  *	     Module:
  *
  *	Description:
  *
  *
  *************************************************************************************************/
-#ifndef INTCTRL_H
-#define INTCTRL_H
+#ifndef SYSCTRL_H
+#define SYSCTRL_H
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
 #include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Mcu_Hw.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\IntCtrl_Types.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Config\IntCtrl_Cfg.h"
+#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\SysCtrl_Types.h"
+#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Config\SysCytrl_Cfg.h"
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
@@ -27,22 +27,12 @@
 /**************************************************************************************************
  *	GLOBAL DATA TYPES AND STRUCTURES
  *************************************************************************************************/
+extern void SysCtrl_Init(void);
 
- /********************************************************************
- *	\Syntax				: void IntCtrl_Init(void)
- *	\Description		: Initialize NVIC\SCB Module by passing the
- *                        the configuration into NVIC\SCB registers
- *	\Sync\Async			: Synchronous
- *	\Reentrancy			: None Reentrant
- *	\Parameters (in)	: None
- *	\Parameters (out)	: None
- *	\Return value		: None
- *
- *******************************************************************/
- void IntCtrl_Init(void);
+ 
 
- #endif    /* INTCTRL_H */
+ #endif    /* SYSCTRL_H */
  
 /**************************************************************************************************
- *	END OF FILE:	IntCtrl.h
+ *	END OF FILE:	SysCtrl.h
  *************************************************************************************************/

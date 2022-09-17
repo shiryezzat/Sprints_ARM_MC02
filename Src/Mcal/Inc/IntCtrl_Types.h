@@ -18,7 +18,11 @@
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
- 
+
+ #define XXX            0x0u
+ #define XXY            0x5u
+ #define XYY            0x6u
+ #define YYY            0x7u
 /**************************************************************************************************
  *	GLOBAL FUNCTION MACROS
  *************************************************************************************************/
@@ -125,6 +129,14 @@ typedef enum
 
 }IntCtrl_InterruptType;
  
+typedef struct
+{
+    IntCtrl_InterruptType vectorName;
+    uint32 groupPriority;
+    uint32 subGroupPriority;
+
+}IntCtrl_ConfigType;
+
 
  #endif    /* INTCTRL_TYPES_H */
  

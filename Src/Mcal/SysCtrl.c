@@ -12,12 +12,7 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Mcu_Hw.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Dio.h"
 #include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\SysCtrl.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\IntCtrl.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Gpt.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Port.h"
 /**************************************************************************************************
  *	LOCAL MACROS CONSTANT\FUNCTION
  *************************************************************************************************/
@@ -54,7 +49,36 @@
  *	\Return value		:
  *
  *******************************************************************/
- 
+ void SysCtrl_Init(void)
+{
+	uint32 i;
+
+	uint32 bitOffset = 0;
+	uint32 regOffset = 0;
+
+	volatile uint32 *RCGCxxx = 0;
+	volatile uint32 *PRxxx = 0;
+
+	// enabling clock gateing for require peripherals
+	for (i = 0; i < ACTICATED_PERIPHIRALS_NUM; i++)
+	{
+		// get the required RCGC register for this peripheral
+		regOffset = (SysCtrl_Config[i].enebledPeriphiral) >> 4u;
+		// get the required bit in RCGC and PR registers
+		bitOffset = SysCtrl_Config[i].enebledPeriphiral & 0xfu;
+		// assign the sequired RCGC and PR registers
+		RCGCxxx = (volatile uint32 *)((SysCtrl_BASE) + (RCGC_OFFSET) + (regOffset));
+		PRxxx = (volatile uint32 *)((SysCtrl_BASE) + (PR_OFFSET) + (regOffset));
+
+		// enable clock gating for the peripheral
+		*RCGCxxx |= 1u << (uint32)bitOffset;
+
+		// wait for peripheral to be ready
+		//while (!(*PRxxx & (1u << (uint32)bitOffset)))
+		//{
+		//}
+	}
+}
  
 /**************************************************************************************************
  *	END OF FILE:

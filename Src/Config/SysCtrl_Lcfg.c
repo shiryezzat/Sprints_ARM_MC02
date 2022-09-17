@@ -12,12 +12,7 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Mcu_Hw.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Dio.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\SysCtrl.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\IntCtrl.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Gpt.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Port.h"
+#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Config\SysCytrl_Cfg.h"
 /**************************************************************************************************
  *	LOCAL MACROS CONSTANT\FUNCTION
  *************************************************************************************************/
@@ -41,7 +36,14 @@
 /**************************************************************************************************
  *	GLOBAL FUNCTIONS
  *************************************************************************************************/
- 
+ //configrations array
+const SysCtrl_ConfigType SysCtrl_Config[ACTICATED_PERIPHIRALS_NUM] =
+{
+    // Peripheral to be enables
+    {SysCtrl_GPIOF_Enable},
+    {SysCtrl_16_32_Timer1_Enable}
+
+};
  
 /********************************************************************
  *	\Syntax				:
@@ -57,5 +59,5 @@
  
  
 /**************************************************************************************************
- *	END OF FILE:
+ *	END OF FILE:    SysCtrl_Cfg.c
  *************************************************************************************************/

@@ -12,16 +12,11 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-
  #include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\IntCtrl.h"
  
 /**************************************************************************************************
  *	LOCAL MACROS CONSTANT\FUNCTION
  *************************************************************************************************/
- #define APINT_conf 0x00001111
-
-
-
 
 /**************************************************************************************************
  *	LOCAL DATA
@@ -57,16 +52,32 @@
  *******************************************************************/
  void IntCtrl_Init(void)
  {
-    //Configure Grouping\Subgrouping system in APINT register in SCB
-    APINT = 0xFA05 | APINT_conf;
-    
-    //Assign Group\Subgroup priority in NVIC_PRIx and SCB_SYSPRIx registers
+   volatile uint8 IRQNumber=0;
 
-    //Enable\Disable based on your configuration in NVIC_ENx and SCB_Sys register
-    NVIC_ENx(GPIO_Port_A);
-    NVIC->DIS[0]=00;
-    NVIC->EN[9]=00;
-    NVIC->PRI[0].BF.INTA=00;
+   /*Enabling FAULTMASK and PRIMASK using MSR or CPS*/
+   __asm("CPSIE f");
+   __asm("CPSIE i");
+
+   SCB->CFGCTRL |= 0x10;        /*Enable SWTRIG by setting MAINPEND (bit 1)*/
+
+   NVIC->SWIDETRIG |= 0x00000001; /*This field holds the interrupt ID 
+                                    of the required SGI. For example, a 
+                                    value of 0x3 generates an interrupt on IRQ3*/
+   
+   /*onfigure Grouping\Subgrouping system in APINT register in SCB*/
+   SCB->APINT.BF.VECTKEY = 0xFA05;
+   SCB->APINT.BF.PRIGROUP = PRIGROUPING;
+
+  for (uint8 i = 0; i < ACTIVATED_INT_NUM; i++)
+  {
+    /*Assign Group\Subgroup priority in NVIC_PRIx and SCB_SYSPRIx registers*/
+    NVIC_SetPRIx(&intCtrl_cofig[i]);
+
+    /*Enable\Disable based on your configuration in NVIC_ENx and SCB_Sys register*/
+    NVIC_SetENx(&intCtrl_cofig[i]);
+
+  }
+  
  }
  
 /**************************************************************************************************
