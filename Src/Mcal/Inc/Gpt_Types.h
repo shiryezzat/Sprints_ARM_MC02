@@ -13,7 +13,7 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
- #include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Std_Types.h"
+ #include "Std_Types.h"
 
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
@@ -63,7 +63,7 @@ typedef struct
 
 } Gpt_ConfigType;
 
-typedef void (*Gpt_Notification)();
+typedef void (*Gpt_Notification)(void);
  
 
  #endif    /* GPT_TYPES_H */

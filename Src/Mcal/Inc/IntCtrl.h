@@ -13,9 +13,11 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Mcu_Hw.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\IntCtrl_Types.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Config\IntCtrl_Cfg.h"
+
+#include "IntCtrl_Types.h"
+#include "IntCtrl_Cfg.h"
+#include "Mcu_Hw.h"
+
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/

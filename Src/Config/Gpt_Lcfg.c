@@ -12,7 +12,7 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Config\Gpt_Cfg.h"
+#include "Gpt_Cfg.h"
 /**************************************************************************************************
  *	LOCAL MACROS CONSTANT\FUNCTION
  *************************************************************************************************/
@@ -40,47 +40,6 @@
 /**************************************************************************************************
  *	GLOBAL FUNCTIONS
  *************************************************************************************************/
- 
- 
-/********************************************************************
- *	\Syntax				:
- *	\Description		:
- *
- *	\Sync\Async			:
- *	\Reentrancy			:
- *	\Parameters (in)	:
- *	\Parameters (out)	:
- *	\Return value		:
- *
- *******************************************************************/
-void Gpt_SetTimerModuleInit(Gpt_ConfigType *ConfigPtr)
-{
-    uint32 timer = 0x40000000u | ((ConfigPtr->channelID)<<12u);
-
-    //Disable timer
-    TIMER(timer)->GPTMCTL = 0;
-    //None Concatenated
-    TIMER(timer)->GPTMCFG = 0x04u;
-    //CountDown
-    TIMER(timer)->GPTMTAMR &= ~(1u << 4u);
-    //Disable Interrupts
-    TIMER(timer)->GPTMIMR = 0;
-}
-
-void Gpt_SetTimerMode(Gpt_ConfigType *ConfigPtr)
-{
-    uint32 timer = 0x40000000u | ((ConfigPtr->channelID)<<12u);
-
-    switch (ConfigPtr->channelMode)
-    {
-    case Gpt_OneShot:
-        TIMER(timer)->GPTMTAMR |= 1u << 0u;
-        break;
-    case Gpt_Periodic:
-        TIMER(timer)->GPTMTAMR |= 1u << 1u;
-        break;
-    }
-}
  
 /**************************************************************************************************
  *	END OF FILE: Gpt_Lcfg.c

@@ -12,12 +12,12 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Mcu_Hw.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Dio.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\SysCtrl.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\IntCtrl.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Gpt.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Port.h"
+#include "Mcu_Hw.h"
+#include "Dio.h"
+#include "SysCtrl.h"
+#include "IntCtrl.h"
+#include "Gpt.h"
+#include "Port.h"
 /**************************************************************************************************
  *	LOCAL MACROS CONSTANT\FUNCTION
  *************************************************************************************************/
@@ -29,11 +29,12 @@
 /**************************************************************************************************
  *	GLOBAL DATA
  *************************************************************************************************/
- 
+uint8 onTime = 3;
+uint8 offTime = 1;
 /**************************************************************************************************
  *	LOCAL FUNCTION PROTOTYPES
  *************************************************************************************************/
- 
+ void blink(void);
 /**************************************************************************************************
  *	LOCAL FUNCTIONS
  *************************************************************************************************/
@@ -41,8 +42,7 @@
 /**************************************************************************************************
  *	GLOBAL FUNCTIONS
  *************************************************************************************************/
- 
- 
+
 /********************************************************************
  *	\Syntax				:
  *	\Description		:
@@ -54,7 +54,41 @@
  *	\Return value		:
  *
  *******************************************************************/
- 
+int main(){
+	
+	IntCtrl_Init();
+	SysCtrl_Init();
+	Port_Init();
+	Gpt_Init();
+	Gpt_EnableNotification(Gpt_Timer1, blink);
+
+	Gpt_StartTimer(Gpt_Timer1, offTime);
+		
+	for(;;){}
+}
+
+/********************************************************************
+ *	\Syntax				:
+ *	\Description		:
+ *
+ *	\Sync\Async			:
+ *	\Reentrancy			:
+ *	\Parameters (in)	:
+ *	\Parameters (out)	:
+ *	\Return value		:
+ *
+ *******************************************************************/
+void blink(){
+	
+	if (Dio_ReadChannel(Dio_Channel_F2) == Dio_Low){
+		Dio_FlipChannel(Dio_Channel_F2);
+		Gpt_StartTimer(Gpt_Timer1, onTime);
+	}
+	else{
+		Dio_FlipChannel(Dio_Channel_F2);
+		Gpt_StartTimer(Gpt_Timer1, offTime);
+	}
+} 
  
 /**************************************************************************************************
  *	END OF FILE:

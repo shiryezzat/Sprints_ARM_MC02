@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "dio.h": "c"
+        "dio.h": "c",
+        "intctrl_cfg.h": "c",
+        "mcu_hw.h": "c",
+        "std_types.h": "c",
+        "syscytrl_cfg.h": "c"
     }
 }

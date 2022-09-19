@@ -15,9 +15,9 @@
  *	INCLUDES
  *************************************************************************************************/
 
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Std_Types.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Mcu_Hw.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\IntCtrl_Types.h" 
+#include "Std_Types.h"
+#include "Mcu_Hw.h"
+#include "IntCtrl_Types.h" 
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
@@ -34,12 +34,11 @@
 /**************************************************************************************************
  *	GLOBAL FUNCTION MACROS
  *************************************************************************************************/
-void NVIC_SetPRIx(const IntCtrl_ConfigType *ConfigPtr);
 
 /**************************************************************************************************
  *	GLOBAL DATA TYPES AND STRUCTURES
  *************************************************************************************************/
-extern const IntCtrl_ConfigType intCtrl_cofig[ACTIVATED_INT_NUM];
+extern const IntCtrl_ConfigType intCtrl_Cofig[ACTIVATED_INT_NUM];
 
  
 

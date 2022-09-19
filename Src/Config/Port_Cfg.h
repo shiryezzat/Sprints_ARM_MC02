@@ -13,9 +13,9 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Std_Types.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Common\Mcu_Hw.h"
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Port_Types.h"
+#include "Std_Types.h"
+#include "Mcu_Hw.h"
+#include "Port_Types.h"
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
@@ -30,10 +30,8 @@
 /**************************************************************************************************
  *	GLOBAL DATA TYPES AND STRUCTURES
  *************************************************************************************************/
-extern const Port_ConfigType Port_Config[ACTICATED_PINS_NUM];
-
+ extern const Port_ConfigType Port_Config[ACTICATED_PINS_NUM];
  
-
  #endif    /* PORT_CFG_H */
  
 /**************************************************************************************************

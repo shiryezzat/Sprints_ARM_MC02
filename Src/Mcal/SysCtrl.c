@@ -12,7 +12,7 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\SysCtrl.h"
+#include "SysCtrl.h"
 /**************************************************************************************************
  *	LOCAL MACROS CONSTANT\FUNCTION
  *************************************************************************************************/
@@ -56,27 +56,24 @@
 	uint32 bitOffset = 0;
 	uint32 regOffset = 0;
 
-	volatile uint32 *RCGCxxx = 0;
-	volatile uint32 *PRxxx = 0;
+	volatile uint32 *RCGC = 0;
+	volatile uint32 *PR = 0;
 
-	// enabling clock gateing for require peripherals
+	/* enabling clock gateing for require peripherals */
 	for (i = 0; i < ACTICATED_PERIPHIRALS_NUM; i++)
 	{
-		// get the required RCGC register for this peripheral
+		/* get the required RCGC register for this peripheral */
 		regOffset = (SysCtrl_Config[i].enebledPeriphiral) >> 4u;
-		// get the required bit in RCGC and PR registers
+
+		/* get the required bit in RCGC and PR registers */
 		bitOffset = SysCtrl_Config[i].enebledPeriphiral & 0xfu;
-		// assign the sequired RCGC and PR registers
-		RCGCxxx = (volatile uint32 *)((SysCtrl_BASE) + (RCGC_OFFSET) + (regOffset));
-		PRxxx = (volatile uint32 *)((SysCtrl_BASE) + (PR_OFFSET) + (regOffset));
 
-		// enable clock gating for the peripheral
-		*RCGCxxx |= 1u << (uint32)bitOffset;
+		/* assign the sequired RCGC and PR registers */
+		RCGC = (volatile uint32 *)((SysCtrl_BASE) + (RCGC_OFFSET) + (regOffset));
+		PR = (volatile uint32 *)((SysCtrl_BASE) + (PR_OFFSET) + (regOffset));
 
-		// wait for peripheral to be ready
-		//while (!(*PRxxx & (1u << (uint32)bitOffset)))
-		//{
-		//}
+		/* enable clock gating for the peripheral */
+		*RCGC |= 1u << (uint32)bitOffset;
 	}
 }
  

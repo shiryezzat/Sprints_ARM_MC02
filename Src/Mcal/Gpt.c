@@ -12,7 +12,7 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-#include "F:\Embedded_Systems_Advanced_FWD\uVisionProjects\Sprints_ARM_MC02\Src\Mcal\Inc\Gpt.h"
+#include "Gpt.h"
 /**************************************************************************************************
  *	LOCAL MACROS CONSTANT\FUNCTION
  *************************************************************************************************/
@@ -28,7 +28,14 @@
 /**************************************************************************************************
  *	LOCAL FUNCTION PROTOTYPES
  *************************************************************************************************/
+ void TIMER1A_Handler(void);
  
+ void Gpt_SetTimerModuleInit(Gpt_ConfigType *ConfigPtr);
+ void Gpt_SetTimerMode(Gpt_ConfigType *ConfigPtr);
+
+ void Gpt_EnableNotification(Gpt_ConfigType *ConfigPtr, Gpt_Notification callBackPtr);
+ void Gpt_DisableNotification(Gpt_ConfigType *ConfigPtr);
+ void Gpt_StartTimer(Gpt_ConfigType *ConfigPtr, Gpt_ValueType loadValue);
 /**************************************************************************************************
  *	LOCAL FUNCTIONS
  *************************************************************************************************/
@@ -36,7 +43,6 @@
 /**************************************************************************************************
  *	GLOBAL FUNCTIONS
  *************************************************************************************************/
- 
  
 /********************************************************************
  *	\Syntax				:
@@ -51,7 +57,7 @@
  *******************************************************************/
  void Gpt_Init()
  {
-    for (int i = 0; i < ACTIVATED_TIMERS_NUM; i++)
+    for (uint16 i = 0; i < ACTIVATED_TIMERS_NUM; i++)
     {
         Gpt_SetTimerModuleInit(&gpt_config[i]);
         Gpt_SetTimerMode(&gpt_config[i]);
@@ -61,6 +67,47 @@
     // //enable GPT_PREDEF_TIMER_1US_16BIT at value 0
     // #endif
  }
+
+  
+/********************************************************************
+ *	\Syntax				:
+ *	\Description		:
+ *
+ *	\Sync\Async			:
+ *	\Reentrancy			:
+ *	\Parameters (in)	:
+ *	\Parameters (out)	:
+ *	\Return value		:
+ *
+ *******************************************************************/
+void Gpt_SetTimerModuleInit(Gpt_ConfigType *ConfigPtr)
+{
+    uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
+
+    //Disable timer
+    TIMER(timer)->GPTMCTL = 0;
+    //None Concatenated
+    TIMER(timer)->GPTMCFG = 0x04u;
+    //CountDown
+    TIMER(timer)->GPTMTAMR &= ~(1u << 4u);
+    //Disable Interrupts
+    TIMER(timer)->GPTMIMR = 0;
+}
+
+void Gpt_SetTimerMode(Gpt_ConfigType *ConfigPtr)
+{
+    uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
+
+    switch (ConfigPtr->channelMode)
+    {
+    case Gpt_OneShot:
+        TIMER(timer)->GPTMTAMR |= 1u << 0u;
+        break;
+    case Gpt_Periodic:
+        TIMER(timer)->GPTMTAMR |= 1u << 1u;
+        break;
+    }
+}
 
 /********************************************************************
  *	\Syntax				:
@@ -74,21 +121,26 @@
  *
  *******************************************************************/
  void Gpt_EnableNotification(Gpt_ConfigType *ConfigPtr, Gpt_Notification callBackPtr)
-{    
+{
+  uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
+  uint8 j=0;
+	Gpt_ChannelType i=Gpt_Timer0;
     
-    uint32 timer = 0x40000000u | ((ConfigPtr->channelID)<<12u);
-    uint8 j;
-
-    // set call back to global array
-    for (Gpt_ChannelType i=Gpt_Timer0, j=0; i <= Gpt_WideTimer5; i++, j++)
-    {
-        callBacksArray[j] = callBackPtr;
-        if (i==Gpt_WideTimer1)
-        {
-            i=Gpt_WideTimer2-1;
-        }   
-    }
-    TIMER(timer)->GPTMIMR |= 1;         /*enable time out interrupt*/
+	/* set call back to global array*/
+	
+	while(i <= Gpt_WideTimer5)
+	{
+		callBacksArray[j] = callBackPtr;
+		i++;
+        
+		if (i==Gpt_WideTimer1)
+			{
+				i=Gpt_WideTimer2;
+			}
+			j++;
+	}
+		
+  TIMER(timer)->GPTMIMR |= 1;         /*enable time out interrupt*/
 }
 
 
@@ -105,7 +157,7 @@
  *******************************************************************/
 void Gpt_DisableNotification(Gpt_ConfigType *ConfigPtr)
 {
-    uint32 timer = 0x40000000u | ((ConfigPtr->channelID)<<12u);
+    uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
     TIMER(timer)->GPTMICR = 0x10F1F;        /*disable interrupts*/
 }
 
@@ -122,7 +174,7 @@ void Gpt_DisableNotification(Gpt_ConfigType *ConfigPtr)
  *******************************************************************/
 void Gpt_StartTimer(Gpt_ConfigType *ConfigPtr, Gpt_ValueType loadValue)
 {
-    uint32 timer = 0x40000000u | ((ConfigPtr->channelID)<<12u);
+    uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
 
     TIMER(timer)->GPTMTAILR = loadValue * 0xF423FF;
     TIMER(timer)->GPTMICR = 0x1;        /* TimerA timeout flag bit clears*/
