@@ -64,8 +64,9 @@
   //                                   value of 0x3 generates an interrupt on IRQ3*/
    
    /*onfigure Grouping\Subgrouping system in APINT register in SCB*/
-   SCB->APINT.BF.VECTKEY = 0xFA05;
-   SCB->APINT.BF.PRIGROUP = PRIGROUPING;
+  //  SCB->APINT.BF.VECTKEY = 0xFA05;
+  //  SCB->APINT.BF.PRIGROUP = PRIGROUPING;
+  APINT |= (0x05FA0000u | PRIGROUPING );
 
   for (uint8 i = 0; i < ACTIVATED_INT_NUM; i++)
   {
@@ -92,22 +93,22 @@
  *******************************************************************/
  void NVIC_SetPRIx(const IntCtrl_ConfigType *ConfigPtr)
  {
-    uint32 bitOffset;
-    uint32 offset;
+    volatile uint8 bitOffset;
+    volatile uint8 offset;
     
     	bitOffset = ((((ConfigPtr->vectorName) % 4) * 8) +5) ;
 		offset= (ConfigPtr->vectorName) / 4;
 
 		#if		(PRIGROUPING == XXX)
-    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->groupPriority << bitOffset);
+    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->groupPriority << (uint32)bitOffset);
 		#elif	(PRIGROUPING == XXY)
-    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->groupPriority << (bitOffset+1));
-    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->subGroupPriority << bitOffset);
+    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->groupPriority << ((uint32)bitOffset+1));
+    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->subGroupPriority << (uint32)bitOffset);
     	#elif	(PRIGROUPING == XYY)	
-			NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->groupPriority << (bitOffset+2));
-			NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->subGroupPriority << bitOffset);
+			NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->groupPriority << ((uint32)bitOffset+2));
+			NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->subGroupPriority << (uint32)bitOffset);
    		#elif	(PRIGROUPING == YYY)
-    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->subGroupPriority << bitOffset);
+    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->subGroupPriority << (uint32)bitOffset);
     	#endif
  }
  
@@ -124,10 +125,10 @@
  *******************************************************************/
  void NVIC_SetENx(const IntCtrl_ConfigType *ConfigPtr)
  {
-	uint32 bitOffset;
+	volatile uint8 bitOffset;
 
 	bitOffset = (ConfigPtr->vectorName %32) ;
-	NVIC->EN[ConfigPtr->vectorName /32] |= ((1u) << bitOffset);
+	NVIC->EN[ConfigPtr->vectorName /32] |= ((1u) << (uint32)bitOffset);
  }
 /**************************************************************************************************
  *	END OF FILE: Std_Types.h

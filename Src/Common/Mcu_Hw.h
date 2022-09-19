@@ -358,7 +358,7 @@ typedef struct
 //  #define CPUID                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD00))
 //  #define INTCTRL                        *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD04))
 //  #define VTABLE                         *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD08))
-//  #define APINT                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD0C))
+  #define APINT                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD0C))
 //  #define SYSCTRL                        *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD10))
 //  #define CFGCTRL                        *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD14))
 //  #define SYSPRI1                        *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD18))

@@ -144,7 +144,8 @@ void Port_SetPinInternalAttach(const Port_ConfigType *ConfigPtr)
     // uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
     // uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
 
-    switch (ConfigPtr->internalAttach)
+	uint16 attach =ConfigPtr->internalAttach;
+    switch (attach)
     {
     case Port_PinOpenDrain:
         GPIO(port)->GPIOODR |= (1<<pin);
