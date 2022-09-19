@@ -55,16 +55,23 @@ uint8 offTime = 1;
  *
  *******************************************************************/
 int main(){
-	
+	uint32 i=0;
+
 	IntCtrl_Init();
 	SysCtrl_Init();
 	Port_Init();
 	Gpt_Init();
-	Gpt_EnableNotification(Gpt_Timer1, blink);
 
-	Gpt_StartTimer(Gpt_Timer1, offTime);
-		
-	for(;;){}
+	for ( i = 0; i < ACTIVATED_TIMERS_NUM; i++)
+	{
+		Gpt_EnableNotification(&gpt_config[i], blink);
+		Gpt_StartTimer(&gpt_config[i], offTime);
+	}
+		GPIOF->GPIODIR |= (1<<2);
+
+	for(;;){
+		GPIOF->GPIODATA[2] = 0x1u;
+	}
 }
 
 /********************************************************************
@@ -79,15 +86,20 @@ int main(){
  *
  *******************************************************************/
 void blink(){
+	uint32 i=0;
+
+	for ( i = 0; i < ACTIVATED_TIMERS_NUM; i++)
+	{
+		if (Dio_ReadChannel(Dio_Channel_F2) == Dio_Low){
+			Dio_FlipChannel(Dio_Channel_F2);
+			Gpt_StartTimer(&gpt_config[i], onTime);
+		}
+		else{
+			Dio_FlipChannel(Dio_Channel_F2);
+			Gpt_StartTimer(&gpt_config[i], offTime);
+		}
+	}
 	
-	if (Dio_ReadChannel(Dio_Channel_F2) == Dio_Low){
-		Dio_FlipChannel(Dio_Channel_F2);
-		Gpt_StartTimer(Gpt_Timer1, onTime);
-	}
-	else{
-		Dio_FlipChannel(Dio_Channel_F2);
-		Gpt_StartTimer(Gpt_Timer1, offTime);
-	}
 } 
  
 /**************************************************************************************************

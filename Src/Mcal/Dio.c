@@ -120,7 +120,7 @@ void Dio_WritePort(Dio_PortLevelType PortId, Dio_PortLevelType Level)
  *	\Description		:
  *
  *	\Sync\Async			:
- *	\Reentrancy			:None Reentrant
+ *	\Reentrancy			:Non Reentrant
  *	\Parameters (in)	:
  *	\Parameters (out)	:
  *	\Return value		:

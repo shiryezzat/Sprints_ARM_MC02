@@ -25,14 +25,20 @@
  *************************************************************************************************/
  void Gpt_Init(void);
 
+ void Gpt_EnableNotification(Gpt_ConfigType *ConfigPtr, Gpt_Notification callBackPtr);
+ void Gpt_DisableNotification(Gpt_ConfigType *ConfigPtr);
+ void Gpt_StartTimer(Gpt_ConfigType *ConfigPtr, Gpt_ValueType loadValue);
+ 
+ void TIMER1A_Handler(void);
+
+
 /**************************************************************************************************
  *	GLOBAL DATA TYPES AND STRUCTURES
  *************************************************************************************************/
-extern Gpt_Notification callBacksArray[12] = {NULL};
+
 
  #endif    /* GPT_H */
  
 /**************************************************************************************************
  *	END OF FILE:	Gpt.h
  *************************************************************************************************/
- 

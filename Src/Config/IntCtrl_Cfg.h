@@ -14,20 +14,19 @@
 /**************************************************************************************************
  *	INCLUDES
  *************************************************************************************************/
-
-#include "Std_Types.h"
 #include "Mcu_Hw.h"
 #include "IntCtrl_Types.h" 
+
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
 #define ACTIVATED_INT_NUM                           (2u)
 
 /*
- * xxx__ for group priority(0->7), subgroup priority (0)
- * xxy__ for group priority(0->3), subgroup priority (0->1)
- * xyy__ for group priority(0->1), subgroup priority (0->3)
- * yyy__ for group priority(0)	 , subgroup priority (0->7)
+ * XXX for group priority(0->7), subgroup priority (0)
+ * XXY for group priority(0->3), subgroup priority (0->1)
+ * XYY for group priority(0->1), subgroup priority (0->3)
+ * YYY for group priority(0)	 , subgroup priority (0->7)
  */
 #define PRIGROUPING                                 XXY
 
