@@ -78,29 +78,29 @@
  *******************************************************************/
 void Gpt_SetTimerModuleInit(Gpt_ConfigType *ConfigPtr)
 {
-    uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
+    // uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
 
     //Disable timer
-    TIMER(timer)->GPTMCTL = 0;
+    TIMER(ConfigPtr->channelID)->GPTMCTL = 0;
     //None Concatenated
-    TIMER(timer)->GPTMCFG = 0x04u;
+    TIMER(ConfigPtr->channelID)->GPTMCFG = 0x00u;
     //CountDown
-    TIMER(timer)->GPTMTAMR &= ~(1u << 4u);
+    TIMER(ConfigPtr->channelID)->GPTMTAMR &= ~(1u << 4u);
     //Disable Interrupts
-    TIMER(timer)->GPTMIMR = 0;
+    // TIMER(ConfigPtr->channelID)->GPTMIMR = 0;
 }
 
 void Gpt_SetTimerMode(Gpt_ConfigType *ConfigPtr)
 {
-    uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
+    // uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
 
     switch (ConfigPtr->channelMode)
     {
     case Gpt_OneShot:
-        TIMER(timer)->GPTMTAMR |= 1u << 0u;
+        TIMER(ConfigPtr->channelID)->GPTMTAMR |= 1u << 0u;
         break;
     case Gpt_Periodic:
-        TIMER(timer)->GPTMTAMR |= 1u << 1u;
+        TIMER(ConfigPtr->channelID)->GPTMTAMR |= 1u << 1u;
         break;
     }
 }
@@ -118,7 +118,7 @@ void Gpt_SetTimerMode(Gpt_ConfigType *ConfigPtr)
  *******************************************************************/
  void Gpt_EnableNotification(Gpt_ConfigType *ConfigPtr, Gpt_Notification callBackPtr)
 {
-  uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
+//   uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
   uint8 j=0;
 	Gpt_ChannelType i=Gpt_Timer0;
     
@@ -136,7 +136,7 @@ void Gpt_SetTimerMode(Gpt_ConfigType *ConfigPtr)
 			j++;
 	}
 		
-  TIMER(timer)->GPTMIMR |= 1;         /*enable time out interrupt*/
+  TIMER(ConfigPtr->channelID)->GPTMIMR |= 1;         /*enable time out interrupt*/
 }
 
 
@@ -153,8 +153,8 @@ void Gpt_SetTimerMode(Gpt_ConfigType *ConfigPtr)
  *******************************************************************/
 void Gpt_DisableNotification(Gpt_ConfigType *ConfigPtr)
 {
-    uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
-    TIMER(timer)->GPTMICR = 0x10F1F;        /*disable interrupts*/
+    // uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
+    TIMER(ConfigPtr->channelID)->GPTMICR = 0x10F1F;        /*disable interrupts*/
 }
 
 /********************************************************************
@@ -170,11 +170,11 @@ void Gpt_DisableNotification(Gpt_ConfigType *ConfigPtr)
  *******************************************************************/
 void Gpt_StartTimer(Gpt_ConfigType *ConfigPtr, Gpt_ValueType loadValue)
 {
-    uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
+    // uint32 timer = 0x40000000u | ((uint32)(ConfigPtr->channelID)<<12u);
 
-    TIMER(timer)->GPTMTAILR = loadValue * 0xF423FF;
-    TIMER(timer)->GPTMICR = 0x1;        /* TimerA timeout flag bit clears*/
-    TIMER(timer)->GPTMCTL |= (1u << 0);
+    TIMER(ConfigPtr->channelID)->GPTMTAILR = loadValue * 0xF423FF;
+    TIMER(ConfigPtr->channelID)->GPTMICR |= (1<<0);        /* TimerA timeout flag bit clears*/
+    // TIMER(ConfigPtr->channelID)->GPTMCTL |= (1u << 0);
 }
 
 /********************************************************************

@@ -50,8 +50,8 @@
  *******************************************************************/
 Dio_LevelType Dio_ReadChannel(Dio_ChannelType ChannelId)
 {
-    uint32 port = (GPIO_COMMON_BASE | (ChannelId & SECOND_2BITS_MASK));
-    uint32 bit = (ChannelId & FIRST_2BITS_MASK);
+    uint32 port = (GPIO_COMMON_BASE | (ChannelId >> 8u));
+    uint32 bit = (ChannelId & 0xff);
         
     if (GPIO(port)->GPIODATA[bit])
     {
@@ -77,8 +77,8 @@ Dio_LevelType Dio_ReadChannel(Dio_ChannelType ChannelId)
  *******************************************************************/
 void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_LevelType Level)
 {
-    uint32 port = (GPIO_COMMON_BASE | (ChannelId & SECOND_2BITS_MASK));
-    uint32 bit = (ChannelId & FIRST_2BITS_MASK);
+    uint32 port = (GPIO_COMMON_BASE | (ChannelId >> 8u));
+    uint32 bit = (ChannelId & 0xff);
         
     GPIO(port)->GPIODATA[bit] = Level;      //something maybe wrong here
 }
@@ -128,10 +128,10 @@ void Dio_WritePort(Dio_PortLevelType PortId, Dio_PortLevelType Level)
  *******************************************************************/
 void Dio_FlipChannel(Dio_ChannelType ChannelId)
 {
-    uint32 port = (GPIO_COMMON_BASE | (ChannelId & SECOND_2BITS_MASK));
-    uint32 bit = (ChannelId & FIRST_2BITS_MASK);
+    uint32 port = (GPIO_COMMON_BASE | (ChannelId >> 8u));
+    uint32 bit = (ChannelId & 0xff);
 
-    GPIO(port)->GPIODATA[255] ^=  ( ChannelId & FIRST_2BITS_MASK);
+    GPIO(port)->GPIODATA[255] ^=  ( ChannelId);
 }
 
 /**************************************************************************************************

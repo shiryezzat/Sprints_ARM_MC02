@@ -27,7 +27,7 @@
  Gpt_ConfigType gpt_config[ACTIVATED_TIMERS_NUM] =
 {
     //timer channel     Mode
-    {Gpt_Timer1,        Gpt_Periodic}
+    {Gpt_Timer1, "",       Gpt_Periodic}
 };
 /**************************************************************************************************
  *	LOCAL FUNCTION PROTOTYPES

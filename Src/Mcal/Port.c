@@ -79,8 +79,11 @@
  *******************************************************************/
 void Port_SetPinDirection(const Port_ConfigType *ConfigPtr)
 {
-    uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
-    uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
+    uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin >> 4u));
+    uint32 pin = (ConfigPtr->pin & 0xfu);
+
+    // uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
+    // uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
 
     if(ConfigPtr->direction)
     {
@@ -105,8 +108,12 @@ void Port_SetPinDirection(const Port_ConfigType *ConfigPtr)
  *******************************************************************/
 void Port_SetPinMode(const Port_ConfigType *ConfigPtr)
 {
-    uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
-    uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
+    uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin >> 4u));
+    uint32 pin = (ConfigPtr->pin & 0xfu);
+
+    // uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
+    // uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
+
     if(ConfigPtr->mode)
     {
         GPIO(port)->GPIOAFSEL |= (1<<pin);
@@ -131,8 +138,11 @@ void Port_SetPinMode(const Port_ConfigType *ConfigPtr)
  *******************************************************************/
 void Port_SetPinInternalAttach(const Port_ConfigType *ConfigPtr)
 {
-    uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
-    uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
+    uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin >> 4u));
+    uint32 pin = (ConfigPtr->pin & 0xfu);
+
+    // uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
+    // uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
 
     switch (ConfigPtr->internalAttach)
     {
@@ -166,8 +176,11 @@ void Port_SetPinInternalAttach(const Port_ConfigType *ConfigPtr)
  *******************************************************************/
 void Port_SetPinOutputCurrent(const Port_ConfigType *ConfigPtr)
 {
-    uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
-    uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
+    uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin >> 4u));
+    uint32 pin = (ConfigPtr->pin & 0xfu);
+
+    // uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
+    // uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
 
     switch (ConfigPtr->outputcurrent)
     {
