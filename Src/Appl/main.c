@@ -62,8 +62,10 @@ int main(){
 	Port_Init();
 	Gpt_Init();
 
-	Gpt_EnableNotification(&gpt_config[0], blink);
-	Gpt_StartTimer(&gpt_config[0], offTime);
+	Gpt_EnableNotification(Gpt_Timer1, blink);
+	Gpt_StartTimer(Gpt_Timer1, offTime);
+	//Gpt_EnableNotification(&gpt_config[0], blink);
+	//Gpt_StartTimer(&gpt_config[0], offTime);
 
 	// for ( i = 0; i < ACTIVATED_TIMERS_NUM; i++)
 	// {
@@ -93,11 +95,15 @@ void blink(){
 	
 	if (Dio_ReadChannel(Dio_Channel_F2) == Dio_Low){
 		Dio_FlipChannel(Dio_Channel_F2);
-		Gpt_StartTimer(&gpt_config[0], onTime);
+		
+		Gpt_StartTimer(Gpt_Timer1, onTime);
+		//Gpt_StartTimer(&gpt_config[0], onTime);
 	}
 	else{
 		Dio_FlipChannel(Dio_Channel_F2);
-		Gpt_StartTimer(&gpt_config[0], offTime);
+		
+		Gpt_StartTimer(Gpt_Timer1, offTime);
+		//Gpt_StartTimer(&gpt_config[0], offTime);
 	}
 
 	// for ( i = 0; i < ACTIVATED_TIMERS_NUM; i++)

@@ -114,14 +114,19 @@ void Port_SetPinMode(const Port_ConfigType *ConfigPtr)
     // uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
     // uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
 
-    if(ConfigPtr->mode)
+    if((ConfigPtr->mode) == Port_Digital)
     {
-        GPIO(port)->GPIOAFSEL |= (1<<pin);
-        GPIO(port)->GPIOPCTL  |= (ConfigPtr->mode<<(4*pin));
+        
+        GPIO(port)->GPIOAFSEL &=~(1<<pin);      /*GPIO mode*/
+        GPIO(port)->GPIODEN |= (1<<pin);
+
     }
     else
-    {
-        GPIO(port)->GPIOAFSEL &=~(1<<pin);      /*GPIO mode*/
+    {   
+        GPIO(port)->GPIOAFSEL |= (1<<pin);
+        GPIO(port)->GPIOPCTL &= ~(0b1111 << (pin * 4));
+        GPIO(port)->GPIOPCTL  |= (ConfigPtr->mode<<(4*pin));
+
     }
 }
 

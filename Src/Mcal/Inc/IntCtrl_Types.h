@@ -132,7 +132,6 @@ typedef enum
 typedef struct
 {
     IntCtrl_InterruptType vectorName;
-		uint8 _COMPILER_PADDING[3];
     uint32 groupPriority;
     uint32 subGroupPriority;
 

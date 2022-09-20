@@ -96,20 +96,20 @@
     volatile uint8 bitOffset;
     volatile uint8 offset;
     
-    	bitOffset = ((((ConfigPtr->vectorName) % 4) * 8) +5) ;
+    bitOffset = ((((ConfigPtr->vectorName) % 4) * 8) +5) ;
 		offset= (ConfigPtr->vectorName) / 4;
 
 		#if		(PRIGROUPING == XXX)
-    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->groupPriority << (uint32)bitOffset);
+    	NVIC->PRI[offset].R |= (ConfigPtr->groupPriority << (uint32)bitOffset);
 		#elif	(PRIGROUPING == XXY)
-    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->groupPriority << ((uint32)bitOffset+1));
-    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->subGroupPriority << (uint32)bitOffset);
-    	#elif	(PRIGROUPING == XYY)	
-			NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->groupPriority << ((uint32)bitOffset+2));
-			NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->subGroupPriority << (uint32)bitOffset);
-   		#elif	(PRIGROUPING == YYY)
-    		NVIC->PRI[(ConfigPtr->vectorName) / 4].R |= (ConfigPtr->subGroupPriority << (uint32)bitOffset);
-    	#endif
+    	NVIC->PRI[offset].R |= (ConfigPtr->groupPriority << ((uint32)bitOffset+1));
+    	NVIC->PRI[offset].R |= (ConfigPtr->subGroupPriority << (uint32)bitOffset);
+    #elif	(PRIGROUPING == XYY)	
+			NVIC->PRI[offset].R |= (ConfigPtr->groupPriority << ((uint32)bitOffset+2));
+			NVIC->PRI[offset].R |= (ConfigPtr->subGroupPriority << (uint32)bitOffset);
+   	#elif	(PRIGROUPING == YYY)
+    	NVIC->PRI[offset].R |= (ConfigPtr->subGroupPriority << (uint32)bitOffset);
+    #endif
  }
  
 /********************************************************************

@@ -80,7 +80,7 @@ void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_LevelType Level)
     uint32 port = (GPIO_COMMON_BASE | (ChannelId >> 8u));
     uint32 bit = (ChannelId & 0xff);
         
-    GPIO(port)->GPIODATA[bit] = Level;      //something maybe wrong here
+    GPIO(port)->GPIODATA[bit] = (Level * 255u) << 2u;      //something maybe wrong here
 }
 
 /********************************************************************

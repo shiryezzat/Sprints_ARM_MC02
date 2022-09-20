@@ -41,8 +41,8 @@
 const IntCtrl_ConfigType intCtrl_Cofig[ACTIVATED_INT_NUM]=
 {
 	//Peripheral, padding, group priority, subgroup priority
-	{GPIO_Port_F, 			"",	0u,			0u},
-	{Bit32_16_Timer_1A, "",	1u,			0u}
+	{GPIO_Port_F, 			0u,			0u},
+	{Bit32_16_Timer_1A, 	1u,			0u}
 
 };
  
