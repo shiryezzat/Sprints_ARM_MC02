@@ -56,7 +56,17 @@ int main(){
 		Gpt_StartTimer(&gpt_config[i], offTime);
 	}
 	
-	for(;;){}
+	for(;;){
+		
+		if(GPIOF->GPIODATA[0]){
+			onTime--;
+			offTime++;
+		}
+		if(GPIOF->GPIODATA[4]){
+			onTime++;
+			offTime--;
+		}
+	}
 }
 
 void Toggle_Led(){
