@@ -34,6 +34,7 @@ typedef enum
     Gpt_WideTimer3 = 0x4004D000u,
     Gpt_WideTimer4 = 0x4004E000u,
     Gpt_WideTimer5 = 0x4004F000u
+
 } Gpt_ChannelType;
 
 typedef uint32 Gpt_ValueType;
@@ -42,6 +43,7 @@ typedef enum
 {
     Gpt_OneShot = 1u,
     Gpt_Periodic = 2u
+    
 } Gpt_ModeType;
 
 typedef void (*Gpt_Notification)();

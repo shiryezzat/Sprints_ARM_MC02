@@ -28,8 +28,6 @@
 const Port_ConfigType Port_Config[ACTICATED_PINS_NUM]=
 {
     //channel     direction       mode             internal attach                output current
-    //{Port_Pin_F0, Port_PinInput,  Port_PinDigital, Port_PinPullUp,                Port_PinOutputCurrentDefault},
-    //{Port_Pin_F4, Port_PinInput,  Port_PinDigital, Port_PinPullUp,                Port_PinOutputCurrentDefault},
     {Port_Pin_F2, Port_PinOutput, Port_PinDigital, Port_PinInternalAttachDefault, Port_4ma}
 };
 /**************************************************************************************************

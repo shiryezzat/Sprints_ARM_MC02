@@ -29,8 +29,6 @@
  void Gpt_DisableNotification(Gpt_ConfigType *ConfigPtr);
  void Gpt_StartTimer(Gpt_ConfigType *ConfigPtr, Gpt_ValueType loadValue);
  
- void TIMER1A_Handler(void);
-
 
 /**************************************************************************************************
  *	GLOBAL DATA TYPES AND STRUCTURES

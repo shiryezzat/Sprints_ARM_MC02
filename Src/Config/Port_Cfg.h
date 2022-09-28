@@ -19,7 +19,7 @@
 /**************************************************************************************************
  *	GLOBAL CONSTANT MACROS
  *************************************************************************************************/
-#define ACTICATED_PINS_NUM                     3
+#define ACTICATED_PINS_NUM                     1
 
 #define FIRST_2BITS_MASK                       0x000000FFu
 #define SECOND_2BITS_MASK                      0x0000FF00u

@@ -1,58 +1,60 @@
-/**************************************************************************************************
+/*********************************************************************************************************************
  *	FILE DESCRIPTION
- *	---------------------------------------------------------------------------------------------*/
-/**		\file
+ *	----------------------------------------------------------------------------------------------------------------*/
+/*********************		\file
  *		\brief
  *
  *		\details
  *
  *
- *************************************************************************************************/
+ ********************************************************************************************************************/
   
-/**************************************************************************************************
+/*********************************************************************************************************************
  *	INCLUDES
- *************************************************************************************************/
+ ********************************************************************************************************************/
  #include "Port.h"
-/**************************************************************************************************
+/*********************************************************************************************************************
  *	LOCAL MACROS CONSTANT\FUNCTION
- *************************************************************************************************/
+ ********************************************************************************************************************/
  
-/**************************************************************************************************
+/*********************************************************************************************************************
  *	LOCAL DATA
- *************************************************************************************************/
+ ********************************************************************************************************************/
  
-/**************************************************************************************************
+/*********************************************************************************************************************
  *	GLOBAL DATA
- *************************************************************************************************/
+ ********************************************************************************************************************/
  
-/**************************************************************************************************
+/*********************************************************************************************************************
  *	LOCAL FUNCTION PROTOTYPES
- *************************************************************************************************/
+ ********************************************************************************************************************/
  void Port_SetPinDirection(const Port_ConfigType *ConfigPtr);
  void Port_SetPinMode(const Port_ConfigType *ConfigPtr);
  void Port_SetPinInternalAttach(const Port_ConfigType *ConfigPtr);
  void Port_SetPinOutputCurrent(const Port_ConfigType *ConfigPtr);
 
-/**************************************************************************************************
+/*********************************************************************************************************************
  *	LOCAL FUNCTIONS
- *************************************************************************************************/
+ ********************************************************************************************************************/
  
-/**************************************************************************************************
+/*********************************************************************************************************************
  *	GLOBAL FUNCTIONS
- *************************************************************************************************/
+ ********************************************************************************************************************/
+
  
- 
-/********************************************************************
- *	\Syntax				:
- *	\Description		:
+/***************************************************************************************
+ *	\Syntax				: void Port_Init()
+ *	\Description		: call local functions that configure required I/O pins
+                          direction, alternate function, internal attach and required
+                          driving output current
  *
- *	\Sync\Async			:
- *	\Reentrancy			:
- *	\Parameters (in)	:
- *	\Parameters (out)	:
- *	\Return value		:
+ *	\Sync\Async			: Synchronous
+ *	\Reentrancy			: Non Reentrant
+ *	\Parameters (in)	: None
+ *	\Parameters (out)	: None
+ *	\Return value		: None
  *
- *******************************************************************/
+ **************************************************************************************/
  void Port_Init()
  {
     for (int i = 0; i < ACTICATED_PINS_NUM; i++)
@@ -66,24 +68,21 @@
  }
  
   
-/********************************************************************
- *	\Syntax				:
- *	\Description		:
+/***************************************************************************************
+ *	\Syntax				: void Port_SetPinDirection(const Port_ConfigType *ConfigPtr)
+ *	\Description		: configure pin direction
  *
- *	\Sync\Async			:
- *	\Reentrancy			:
- *	\Parameters (in)	:
- *	\Parameters (out)	:
- *	\Return value		:
+ *	\Sync\Async			: Synchronous
+ *	\Reentrancy			: Non Reentrant
+ *	\Parameters (in)	: const Port_ConfigType *ConfigPtr
+ *	\Parameters (out)	: None
+ *	\Return value		: None
  *
- *******************************************************************/
+ **************************************************************************************/
 void Port_SetPinDirection(const Port_ConfigType *ConfigPtr)
 {
     uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin >> 4u));
     uint32 pin = (ConfigPtr->pin & 0xfu);
-
-    // uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
-    // uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
 
     if(ConfigPtr->direction)
     {
@@ -95,24 +94,21 @@ void Port_SetPinDirection(const Port_ConfigType *ConfigPtr)
     }
 }
 
-/********************************************************************
- *	\Syntax				:
- *	\Description		:
+/***************************************************************************************
+ *	\Syntax				: void Port_SetPinMode(const Port_ConfigType *ConfigPtr)
+ *	\Description		: configure pin mode
  *
- *	\Sync\Async			:
- *	\Reentrancy			:
- *	\Parameters (in)	:
- *	\Parameters (out)	:
- *	\Return value		:
+ *	\Sync\Async			: Synchronous
+ *	\Reentrancy			: Non Reentrant
+ *	\Parameters (in)	: const Port_ConfigType *ConfigPtr
+ *	\Parameters (out)	: None
+ *	\Return value		: None
  *
- *******************************************************************/
+ **************************************************************************************/
 void Port_SetPinMode(const Port_ConfigType *ConfigPtr)
 {
     uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin >> 4u));
     uint32 pin = (ConfigPtr->pin & 0xfu);
-
-    // uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
-    // uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
 
     if((ConfigPtr->mode) == Port_Digital)
     {
@@ -130,24 +126,21 @@ void Port_SetPinMode(const Port_ConfigType *ConfigPtr)
     }
 }
 
-/********************************************************************
- *	\Syntax				:
- *	\Description		:
+/***************************************************************************************
+ *	\Syntax				: void Port_SetPinInternalAttach(const Port_ConfigType *ConfigPtr)
+ *	\Description		: configure pin internal attach
  *
- *	\Sync\Async			:
- *	\Reentrancy			:
- *	\Parameters (in)	:
- *	\Parameters (out)	:
- *	\Return value		:
+ *	\Sync\Async			: Synchronous
+ *	\Reentrancy			: Non Reentrant
+ *	\Parameters (in)	: const Port_ConfigType *ConfigPtr
+ *	\Parameters (out)	: None
+ *	\Return value		: None
  *
- *******************************************************************/
+ **************************************************************************************/
 void Port_SetPinInternalAttach(const Port_ConfigType *ConfigPtr)
 {
     uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin >> 4u));
     uint32 pin = (ConfigPtr->pin & 0xfu);
-
-    // uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
-    // uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
 
 	uint16 attach =ConfigPtr->internalAttach;
     switch (attach)
@@ -169,24 +162,21 @@ void Port_SetPinInternalAttach(const Port_ConfigType *ConfigPtr)
     }
 }
 
-/********************************************************************
- *	\Syntax				:
- *	\Description		:
+/***************************************************************************************
+ *	\Syntax				: void Port_SetPinOutputCurrent(const Port_ConfigType *ConfigPtr)
+ *	\Description		: configure pin output current
  *
- *	\Sync\Async			:
- *	\Reentrancy			:
- *	\Parameters (in)	:
- *	\Parameters (out)	:
- *	\Return value		:
+ *	\Sync\Async			: Synchronous
+ *	\Reentrancy			: Non Reentrant
+ *	\Parameters (in)	: const Port_ConfigType *ConfigPtr
+ *	\Parameters (out)	: None
+ *	\Return value		: None
  *
- *******************************************************************/
+ **************************************************************************************/
 void Port_SetPinOutputCurrent(const Port_ConfigType *ConfigPtr)
 {
     uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin >> 4u));
     uint32 pin = (ConfigPtr->pin & 0xfu);
-
-    // uint32 port = (GPIO_COMMON_BASE | (ConfigPtr->pin & SECOND_2BITS_MASK));
-    // uint32 pin = (ConfigPtr->pin & FIRST_2BITS_MASK);
 
     switch (ConfigPtr->outputcurrent)
     {
@@ -207,6 +197,6 @@ void Port_SetPinOutputCurrent(const Port_ConfigType *ConfigPtr)
     }
 }
 
-/**************************************************************************************************
+/*********************************************************************************************************************
  *	END OF FILE:
- *************************************************************************************************/
+ ********************************************************************************************************************/

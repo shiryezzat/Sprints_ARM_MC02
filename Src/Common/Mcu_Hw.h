@@ -115,7 +115,7 @@ typedef struct
 
 
 
-//GPIO
+// General-Purpose Input/Outputs (GPIOs) Registers
 typedef struct
 {
     uint32 GPIODATA[256];
@@ -159,7 +159,7 @@ typedef struct
 
 }GPIO_Registers;
 
-// General Prpose TIMERs registers
+// General-Purpose Timers registers
 typedef struct
 {
     uint32 GPTMCFG;
@@ -258,7 +258,7 @@ typedef struct
  #define GPIO_E_BASE                    0x40024000u
  #define GPIO_F_BASE                    0x40025000u
 
- // GPT Base addresses
+ // General-Purpose Timers Base addresses
  #define TIMER0_BASE                    0x40030000u
  #define TIMER1_BASE                    0x40031000u
  #define TIMER2_BASE                    0x40032000u
@@ -358,7 +358,7 @@ typedef struct
 //  #define CPUID                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD00))
 //  #define INTCTRL                        *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD04))
 //  #define VTABLE                         *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD08))
-  #define APINT                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD0C))
+//  #define APINT                          *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD0C))
 //  #define SYSCTRL                        *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD10))
 //  #define CFGCTRL                        *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD14))
 //  #define SYSPRI1                        *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD18))
@@ -370,8 +370,7 @@ typedef struct
 //  #define MMADDR                         *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD34))
 //  #define FAULTADDR                      *((volatile uint32*)(CORTEXM4_PERI_BASE_ADDRESS+0xD38))
 
-//GPIO Register
-//GPIO
+// General-Purpose Input/Outputs (GPIOs) Registers
  #define GPIO(GPIO_BASE)                ((volatile GPIO_Registers *)(GPIO_BASE))
 
  #define GPIOA                          ((volatile GPIO_Registers *)(GPIO_A_BASE))
@@ -381,7 +380,7 @@ typedef struct
  #define GPIOE                          ((volatile GPIO_Registers *)(GPIO_E_BASE))
  #define GPIOF                          ((volatile GPIO_Registers *)(GPIO_F_BASE))
 
-//General Purpose TIMERs
+// General-Purpose Timers registers
  #define TIMER(TIMER_BASE)              ((volatile Gpt_Registers *)(TIMER_BASE))
 
  #define TIMER0                         ((volatile Gpt_Registers *)(TIMER0_BASE))

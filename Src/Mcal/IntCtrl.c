@@ -40,40 +40,40 @@
  *************************************************************************************************/
 
 /********************************************************************
- *	\Syntax				: void IntCtrl_Init(void)
- *	\Description		: Initialize NVIC\SCB Module by passing the
- *                        the configuration into NVIC\SCB registers
- *	\Sync\Async			: Synchronous
- *	\Reentrancy			: None Reentrant
+ *	\Syntax				    : void IntCtrl_Init(void)
+ *	\Description		  : Initialize NVIC\SCB Module by passing the
+ *                      the configuration into NVIC\SCB registers
+ *	\Sync\Async			  : Synchronous
+ *	\Reentrancy			  : None Reentrant
  *	\Parameters (in)	: None
  *	\Parameters (out)	: None
- *	\Return value		: None
+ *	\Return value		  : None
  *
  *******************************************************************/
  void IntCtrl_Init(void)
  {
 
-  //  /*Enabling FAULTMASK and PRIMASK using MSR or CPS*/
+  //  /* Enabling FAULTMASK and PRIMASK using MSR or CPS */
   //  __asm("CPSIE f");
   //  __asm("CPSIE i");
 
-  //  SCB->CFGCTRL |= 0x10;        /*Enable SWTRIG by setting MAINPEND (bit 1)*/
+  //  SCB->CFGCTRL |= 0x10;        /* Enable SWTRIG by setting MAINPEND (bit 1) */
 
-  //  NVIC->SWIDETRIG |= 0x00000001; /*This field holds the interrupt ID 
-  //                                   of the required SGI. For example, a 
-  //                                   value of 0x3 generates an interrupt on IRQ3*/
    
-   /*onfigure Grouping\Subgrouping system in APINT register in SCB*/
-  //  SCB->APINT.BF.VECTKEY = 0xFA05;
-  //  SCB->APINT.BF.PRIGROUP = PRIGROUPING;
-  APINT |= (0x05FA0000u | PRIGROUPING );
+   /* Configure Grouping\Subgrouping system in APINT register in SCB */
+   SCB->APINT.BF.VECTKEY = 0xFA05;
+   SCB->APINT.BF.PRIGROUP = XXY;
 
   for (uint8 i = 0; i < ACTIVATED_INT_NUM; i++)
   {
-    /*Assign Group\Subgroup priority in NVIC_PRIx and SCB_SYSPRIx registers*/
+    //  NVIC->SWIDETRIG |= intCtrl_Cofig[i].vectorName ; /* This field holds the interrupt ID 
+    //                                   of the required SGI. For example, a 
+    //                                   value of 0x3 generates an interrupt on IRQ3 */
+
+    /* Assign Group\Subgroup priority in NVIC_PRIx and SCB_SYSPRIx registers */
     NVIC_SetPRIx(&intCtrl_Cofig[i]);
 
-    /*Enable\Disable based on your configuration in NVIC_ENx and SCB_Sys register*/
+    /* Enable\Disable based on your configuration in NVIC_ENx and SCB_Sys register */
     NVIC_SetENx(&intCtrl_Cofig[i]);
 
   }
@@ -81,14 +81,14 @@
  }
  
  /********************************************************************
- *	\Syntax				:
- *	\Description		:
+ *	\Syntax				    : void NVIC_SetPRIx(const IntCtrl_ConfigType *ConfigPtr)
+ *	\Description		  : Set priority
  *
- *	\Sync\Async			:
- *	\Reentrancy			:
- *	\Parameters (in)	:
- *	\Parameters (out)	:
- *	\Return value		:
+ *	\Sync\Async			  : Synchronous
+ *	\Reentrancy			  : None Reentrant
+ *	\Parameters (in)	: const IntCtrl_ConfigType *ConfigPtr
+ *	\Parameters (out)	: None
+ *	\Return value		  : None
  *
  *******************************************************************/
  void NVIC_SetPRIx(const IntCtrl_ConfigType *ConfigPtr)
@@ -113,14 +113,14 @@
  }
  
 /********************************************************************
- *	\Syntax				:
- *	\Description		:
+ *	\Syntax				    : void NVIC_SetENx(const IntCtrl_ConfigType *ConfigPtr)
+ *	\Description		  : Enable Interrupt
  *
- *	\Sync\Async			:
- *	\Reentrancy			:
- *	\Parameters (in)	:
- *	\Parameters (out)	:
- *	\Return value		:
+ *	\Sync\Async			  : Synchronous
+ *	\Reentrancy			  : None Reentrant
+ *	\Parameters (in)	: const IntCtrl_ConfigType *ConfigPtr
+ *	\Parameters (out)	: None
+ *	\Return value		  : None
  *
  *******************************************************************/
  void NVIC_SetENx(const IntCtrl_ConfigType *ConfigPtr)
